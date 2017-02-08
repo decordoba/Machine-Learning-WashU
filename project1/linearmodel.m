@@ -1,5 +1,5 @@
 function [preds] = linearmodel(w, xTe)
-% function w=linearmodel(w,yTr)
+% function w=linearmodel(w,xTe)
 %
 % INPUT:
 % w weight vector (default w=0)

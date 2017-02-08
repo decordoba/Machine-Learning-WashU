@@ -39,3 +39,5 @@ end
 
 disp([dy dh])                                  % print the two vectors
 d = norm(dh-dy)/norm(dh+dy);                   % return norm of diff divided by norm of sum
+
+end
