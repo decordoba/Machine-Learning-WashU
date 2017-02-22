@@ -1,4 +1,4 @@
-function [w,b]=naivebayesCL(x,y);
+function [w, b] = naivebayesCL(x, y)
 % function [w,b]=naivebayesCL(x,y);
 %
 % Implementation of a Naive Bayes classifier
@@ -11,9 +11,13 @@ function [w,b]=naivebayesCL(x,y);
 % b : bias (scalar)
 %
 
-[d,n]=size(x);
+[d, n] = size(x);
+
 %% fill in code here
+[pYpos, pYneg] = naivebayesPY(x, y);
+[pXgivenYpos, pXgivenYneg] = naivebayesPXY(x, y);
 
+w = log(pXgivenYpos ./ pXgivenYneg);
+b = log(pYpos / pYneg);
 
-
-
+end

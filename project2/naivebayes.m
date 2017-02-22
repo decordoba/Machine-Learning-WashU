@@ -23,8 +23,8 @@ function logratio = naivebayes(x, y, x1)
 pYposgivenX = pXgivenYpos * pYpos;
 pYneggivenX = pXgivenYneg * pYneg;
 
-size(pYposgivenX / pYneggivenX)
+% size(pYposgivenX / pYneggivenX)
 
-logratio = log(pYposgivenX / pYneggivenX);
+logratio = log(prod(pYposgivenX ./ pYneggivenX));
 
 end
