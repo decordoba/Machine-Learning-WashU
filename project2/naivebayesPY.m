@@ -1,4 +1,4 @@
-function [pos,neg] = naivebayesPY(x,y)
+function [pos, neg] = naivebayesPY(x, y)
 % function [pos,neg] = naivebayesPY(x,y);
 %
 % Computation of P(Y)
@@ -12,9 +12,16 @@ function [pos,neg] = naivebayesPY(x,y)
 %
 
 % add one all-ones positive and negative example
-x=[x ones(size(x,1),2)];
-y=[y -1 1];
+[d, ~] = size(x);
+x = [x ones(d, 2)];
+y = [y -1 1];
 
-[d,n] = size(x);
+[~, n] = size(x);
+
 %% fill in code here
+% P(Y = +1) = num 1's / num samples
+pos = sum(y == 1) / n;
+% P(Y = -1) = 1 - P(Y = +1) *Only valid if y can only be {-1, 1}
+neg = 1 - pos;
 
+end

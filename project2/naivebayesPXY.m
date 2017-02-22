@@ -1,4 +1,4 @@
-function [posprob,negprob] = naivebayesPXY(x,y)
+function [posprob, negprob] = naivebayesPXY(x, y)
 % function [posprob,negprob] = naivebayesPXY(x,y);
 %
 % Computation of P(X|Y)
@@ -11,11 +11,27 @@ function [posprob,negprob] = naivebayesPXY(x,y)
 % negprob: probability vector of p(x|y=-1) (dx1)
 %
 
-% add one all-ones positive and negative example
-[d,n]=size(x);
-x=[x ones(d,2)];
-y=[y -1 1];
+% to be accurate, because naivebayesPY also adds one all-ones positive
+% and negative example, we have to calculate P(Y) before adding these
+[pYpos, pYneg] = naivebayesPY(x, y);
 
-[d,n] = size(x);
+% add one all-ones positive and negative example
+[d, ~] = size(x);
+x = [x ones(d, 2)];
+y = [y -1 1];
+
+[~, n] = size(x);
+
 %% fill in code here
 
+% P(X | Y = +1) = average x for Y = 1
+%posprob = x * (y == 1)' / (n * pYpos);
+posprob = x * (y == 1)';
+posprob = posprob / sum(posprob);
+
+% P(X | Y = -1) = average x for Y = -1
+%negprob = x * (y == -1)' / (n * pYneg);
+negprob = x * (y == 1)';
+negprob = negprob / sum(negprob);
+
+end
