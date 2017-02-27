@@ -12,19 +12,9 @@ function logratio = naivebayes(x, y, x1)
 % negcond: log conditional probability log P(Y = -1|X=x1)
 % logratio: log(poscond / negcond)
 
-[d, n] = size(x);
-
 %% fill in code here
-[pYpos, pYneg] = naivebayesPY(x, y);
-[pXgivenYpos, pXgivenYneg] = naivebayesPXY(x, y);
+[w, b] = naivebayesCL(x, y);
 
-% Technically, we have to divide each by pX, but when doing logratio,
-% both p(X) would cancel, so we don't need to calculate them
-pYposgivenX = pXgivenYpos * pYpos;
-pYneggivenX = pXgivenYneg * pYneg;
-
-% size(pYposgivenX / pYneggivenX)
-
-logratio = log(prod(pYposgivenX ./ pYneggivenX));
+logratio = w'*x1 + b;
 
 end
