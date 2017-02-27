@@ -1,4 +1,4 @@
-function preds = classifyLinear(x,w,b);
+function preds = classifyLinear(x, w, b)
 % function preds=classifyLinear(x,w,b);
 %
 % Make predictions with a linear classifier
@@ -12,5 +12,6 @@ function preds = classifyLinear(x,w,b);
 %
 
 %% fill in code here
+preds = sign(w'*x + b);
 
-
+end
