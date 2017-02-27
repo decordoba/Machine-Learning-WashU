@@ -1,5 +1,5 @@
 function [x,y]=genTrainFeatures()
-%function [x,y]=genTrainFeatures()
+% function [x,y]=genTrainFeatures()
 %
 % This function calls the python script "name2features.py" 
 % to convert names into feature vectors and loads in the training data. 

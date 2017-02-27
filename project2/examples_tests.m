@@ -1,4 +1,4 @@
-function [r, ok ,s]=examples_tests()
+function [r, ok ,s] = examples_tests()
 % function [r, ok, s]=examples_tests()
 %
 % Tests the functions from homework assignment 0
@@ -12,45 +12,45 @@ function [r, ok ,s]=examples_tests()
 
 
 % Put in any seed below
-rand('seed',31415926535);
-% initial outputs
-r=0;
-ok=0;
-s={};
+rng(31415926535);  % Equivalent to rand('seed', 31415926535); (Deprecated)
 
-% load in name data
-[xTr,yTr]=genTrainFeatures();
+% initial outputs
+r = 0;
+ok = 0;
+s = {};
+
+% Load in name data
+[xTr, yTr] = genTrainFeatures();
 fprintf('Starting Test 1\n');
 try
     % Test 1: check if probabilities sum to 1
-    [pos,neg] = naivebayesPY(xTr,yTr);
-    failtest = norm(pos+neg-1)>1e-08;
-    addon='';
+    [pos, neg] = naivebayesPY(xTr, yTr);
+    failtest = norm(pos + neg - 1) > 1e-08;
+    addon = '';
 catch
     failtest = true;
     addon = lasterr();
 end;
 if failtest,
-    r = r+1;
-    s{length(s)+1}=['Failed Test 1 naivebayesPY: Probabilities of P(Y) do not sum to 1.' addon];
-else,
-    ok=ok+1;
+    r = r + 1;
+    s{length(s) + 1} = ['Failed Test 1 naivebayesPY: Probabilities of P(Y) do not sum to 1.' addon];
+else
+    ok = ok + 1;
 end;
 fprintf('Completed Test 1\n');
 
-y=[-1 1];
-x=[0 1
-   1 0];
 
+y = [-1 1];
+x = [0 1
+     1 0];
 failtest = false;
 fprintf('Starting Test 2\n');
 try
-
     % Test 2: Test the Naive Bayes function on a simple matrix
-    [pos,neg] = naivebayesPY(x,y);
+    [pos, neg] = naivebayesPY(x, y);
     pos0 = 0.5;
-    neg = 0.5;
-    if (pos ~= pos0) or (neg ~= neg0),
+    neg0 = 0.5;
+    if pos ~= pos0 || neg ~= neg0
         failtest = true;
     end;
     addon = '';
@@ -59,23 +59,23 @@ catch
     addon = lasterr();
 end;
 if failtest,
-    r = r + 1
-    s{length(s)+1}=['Failed Test 2 naivebayesPXY: The calculation of P(Y) seems incorrect.' addon];
-else,
-    ok=ok+1;
+    r = r + 1;
+    s{length(s) + 1} = ['Failed Test 2 naivebayesPXY: The calculation of P(Y) seems incorrect.' addon];
+else
+    ok = ok + 1;
 end;
 fprintf('Completed Test 2\n');
 
 
 failtest = false;
 fprintf('Starting Test 3\n');
-pospossi0 = [0.66667;0.33333];
-negpossi0 = [0.33333;0.66667];
+pospossi0 = [0.66667; 0.33333];
+negpossi0 = [0.33333; 0.66667];
 try
     % Test 3 calculate conditional probabilities
     [pospossi,negpossi] = naivebayesPXY(x,y);
     addon = '';
-    if (norm(pospossi - pospossi0) > 1e-03) or (norm(negpossi - negpossi0) > 1e-03),
+    if norm(pospossi - pospossi0) > 1e-03 || norm(negpossi - negpossi0) > 1e-03
         failtest = true;
     end;
 catch
@@ -83,10 +83,10 @@ catch
     addon = lasterr();
 end;
 if failtest,
-    r = r+1;
-    s{length(s)+1}=['Failed Test 3: The calculation of P(X|Y) seems incorrect.' addon];
-else,
-    ok=ok+1;
+    r = r + 1;
+    s{length(s) + 1}=['Failed Test 3: The calculation of P(X|Y) seems incorrect.' addon];
+else
+    ok = ok + 1;
 end;
 fprintf('Finished Test 3\n');
 
@@ -98,5 +98,6 @@ fprintf('Finished Test 3\n');
 
 %Tests 10 is on naivebayesCL
 
+percentage = ok / (r + ok) * 100;
 
-percentage=ok/(r+ok)*100;
+end
