@@ -13,7 +13,7 @@ while true
         break
     end;
     
-    system(['echo ' name ' | python name2features.py > tmpfeatures.csv' ]);
+    system(['echo ' name ' | python name2features.py > tmpfeatures.csv']);
     x = load('tmpfeatures.csv')';
 
     pred = classifyLinear(x, w, b);
