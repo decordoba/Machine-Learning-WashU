@@ -17,7 +17,7 @@ else
     system('cat girls.train | python name2features.py > girls.csv ');
     system('cat boys.train | python name2features.py > boys.csv ');
 end
-    
+
 %% load in girls
 girls=load('girls.csv');
 [n1,d1]=size(girls);

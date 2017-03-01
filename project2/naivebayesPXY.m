@@ -17,7 +17,6 @@ x = [x ones(d, 2)];
 y = [y -1 1];
 
 %% fill in code here
-
 % P(X | Y = +1) = average x for Y = 1
 posprob = x * (y == 1)';
 posprob = posprob / sum(posprob);
