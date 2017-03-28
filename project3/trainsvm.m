@@ -16,35 +16,27 @@ function [svmclassify, sv_i, alphas] = trainsvm(xTr, yTr, C, ktype, kpar)
 %
 
 if nargin < 5, kpar = 1; end;
-yTr = yTr(:);
-svmclassify = @(xTe) (rand(1, size(xTe,2)) > 0.5).*2 - 1; %% classify everything randomly
-n = length(yTr);
+%yTr = yTr(:);
+%svmclassify = @(xTe) (rand(1, size(xTe,2)) > 0.5).*2 - 1; %% classify everything randomly
+%n = length(yTr);
 
-
-disp('Generating Kernel ...')
+disp('Generating Kernel ...');
 K = computeK(ktype, xTr, xTr, kpar);
 
-disp('Solving QP ...')
+disp('Solving QP ...');
 [H, f, Aeq, beq, LB, UB] = generateQP(K, yTr, C);
-size(Aeq)
-size(beq)
-X = quadprog(H, f, zeros(size(Aeq)), zeros(size(beq)), Aeq, beq, LB, UB);
+alphas = quadprog(H, f, zeros(size(Aeq)), zeros(size(beq)), Aeq, beq, LB, UB);
 
-disp('Recovering bias')
-%
-% YOUR CODE 
-%
-disp('Extracting support vectors ...')
-%
-% YOUR CODE 
-%
-disp('Creating classifier ...')
-%
-% YOUR CODE 
-%
-disp('Computing training error:') % this is optional, but interesting to see
-%
-% YOUR CODE 
-%
+disp('Recovering bias');
+bias = recoverBias(K, yTr, alphas, C);
+
+disp('Extracting support vectors ...');
+sv_i = alphas~=0;
+
+disp('Creating classifier ...');
+svmclassify = @(x) (alphas'.*yTr*computeK(ktype, xTr, x, kpar) + bias)';
+
+disp('Computing training error:'); % this is optional, but interesting to see
+trainerr = sum(sign(svmclassify(xTr))~=yTr(:))/length(yTr)
 
 end

@@ -1,4 +1,4 @@
-function [bestC,bestP,bestval,allvalerrs]=crossvalidate(xTr,yTr,ktype,Cs,paras)
+function [bestC, bestP, bestval, allvalerrs] = crossvalidate(xTr, yTr, ktype, Cs, paras)
 % function [bestC,bestP,bestval,allvalerrs]=crossvalidate(xTr,yTr,ktype,Cs,paras)
 %
 % INPUT:	
@@ -18,19 +18,30 @@ function [bestC,bestP,bestval,allvalerrs]=crossvalidate(xTr,yTr,ktype,Cs,paras)
 % validation split. 
 %
 
-%%% Feel free to delete this
-bestC=0;
-bestP=0;
-bestval=10^10;
-
 %% Split off validation data set
-% YOUR CODE
+train_rate = 0.8;  % 80% training, 20% cross-validation
+size_data = size(xTr, 2);
+size_train = floor(size_data * train_rate);
 
+xTv = xTr(:, size_train+1:end);
+yTv = yTr(:, size_train+1:end);
+xTr = xTr(:, 1:size_train);
+yTr = yTr(:, 1:size_train);
 
 %% Evaluate all parameter settings
-% YOUR CODE
+allvalerrs = zeros(length(Cs), length(paras));
+for i = 1:length(Cs)
+    for j = 1:length(paras)
+        svmclassify = trainsvm(xTr, yTr, Cs(i), ktype, paras(j));
+        allvalerrs(i,j) = sum(sign(svmclassify(xTv))~=yTv(:))/length(yTv);
+    end;
+end;
 
 %% Identify best setting
-% YOUR CODE
+[bestval_tmp, idx] = max(allvalerrs);
+idx_Cs = idx(1);
+[bestval, idx_paras] = max(bestval_tmp);
+bestC = Cs(idx_Cs);
+bestP = paras(idx_paras);
 
-
+end

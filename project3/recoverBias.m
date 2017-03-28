@@ -1,9 +1,9 @@
-function bias=recoverBias(K,yTr,alphas,C);
+function bias=recoverBias(K,yTr,alphas,C)
 % function bias=recoverBias(K,yTr,alphas,C);
 %
 % INPUT:	
 % K : nxn kernel matrix
-% yTr : nx1 input labels
+% yTr : 1xn input labels
 % alphas  : nx1 vector or alpha values
 % C : regularization constant
 % 
@@ -15,4 +15,10 @@ function bias=recoverBias(K,yTr,alphas,C);
 %
 
 
-% YOUR CODE 
+% YOUR CODE
+a = sort(alphas);
+idx = find((a>0) & (a<C));
+best = idx(1);
+bias = yTr(best) - alphas'.*yTr*K(:, best);
+
+end

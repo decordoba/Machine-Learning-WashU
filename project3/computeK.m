@@ -14,8 +14,6 @@ function K = computeK(kernel_type, X, Z, param)
 %
 %
 
-%%YOUR CODE HERE
-
 if nargin < 2
 	Z = X;
 end;

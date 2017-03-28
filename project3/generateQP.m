@@ -17,14 +17,14 @@ function [H, q, Aeq, beq, lb, ub] = generateQP(K, yTr, C)
 assert(d == n);
 
 % YOUR CODE
-%% Constraint: min_x 0.5*X'*H*X + q*X ()
+%% Constraint: min_x 0.5*X'*H*X + q*X
 H = (yTr'*yTr).*K;
 q = -ones(n, 1);
 %% Constraint: Aeq*X = beq
 Aeq = yTr;
 beq = 0;
 %% Constraint: lb <= X <= ub
-lb = 0;
-ub = C;
+lb = zeros(n, 1);
+ub = C*ones(n, 1);
 
 end
