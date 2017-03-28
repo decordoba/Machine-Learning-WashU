@@ -38,9 +38,9 @@ for i = 1:length(Cs)
 end;
 
 %% Identify best setting
-[bestval_tmp, idx] = max(allvalerrs);
-idx_Cs = idx(1);
-[bestval, idx_paras] = max(bestval_tmp);
+[bestval_tmp, idx] = min(allvalerrs);
+[bestval, idx_paras] = min(bestval_tmp);
+idx_Cs = idx(idx_paras);
 bestC = Cs(idx_Cs);
 bestP = paras(idx_paras);
 
