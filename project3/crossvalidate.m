@@ -19,7 +19,7 @@ function [bestC, bestP, bestval, allvalerrs] = crossvalidate(xTr, yTr, ktype, Cs
 %
 
 %% Split off validation data set
-train_rate = 0.8;  % 80% training, 20% cross-validation
+train_rate = 0.1;  % 90% training, 10% cross-validation
 size_data = size(xTr, 2);
 size_train = floor(size_data * train_rate);
 
