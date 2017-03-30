@@ -1,4 +1,4 @@
-function bias=recoverBias(K,yTr,alphas,C)
+function bias=recoverBias(K, yTr, alphas, C)
 % function bias=recoverBias(K,yTr,alphas,C);
 %
 % INPUT:	
@@ -14,11 +14,9 @@ function bias=recoverBias(K,yTr,alphas,C)
 % 0<alpha<C
 %
 
-
 % YOUR CODE
-a = sort(alphas);
-idx = find((a>0) & (a<C));
-best = idx(1);
+idx = (alphas > 0) & (alphas < C);
+[~, best] = min(abs(alphas.*idx - C/2));
 bias = yTr(best) - alphas'.*yTr*K(:, best);
 
 end

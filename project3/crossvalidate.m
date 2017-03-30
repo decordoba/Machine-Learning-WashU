@@ -18,22 +18,23 @@ function [bestC, bestP, bestval, allvalerrs] = crossvalidate(xTr, yTr, ktype, Cs
 % validation split. 
 %
 
-%% Split off validation data set
-train_rate = 0.1;  % 90% training, 10% cross-validation
-size_data = size(xTr, 2);
-size_train = floor(size_data * train_rate);
-
-xTv = xTr(:, size_train+1:end);
-yTv = yTr(:, size_train+1:end);
-xTr = xTr(:, 1:size_train);
-yTr = yTr(:, 1:size_train);
-
 %% Evaluate all parameter settings
+size_data = size(xTr, 2);
 allvalerrs = zeros(length(Cs), length(paras));
 for i = 1:length(Cs)
     for j = 1:length(paras)
-        svmclassify = trainsvm(xTr, yTr, Cs(i), ktype, paras(j));
-        allvalerrs(i,j) = sum(sign(svmclassify(xTv))~=yTv(:))/length(yTv);
+        for s = 1:10
+            start_split = floor((s-1)*size_data/10);
+            end_split = floor(s*size_data/10);
+
+            xTv = xTr(:, start_split+1:end_split);
+            yTv = yTr(:, start_split+1:end_split);
+            xTr_ = xTr(:, [1:start_split, end_split+1:size_data]);
+            yTr_ = yTr(:, [1:start_split, end_split+1:size_data]);
+
+            svmclassify = trainsvm(xTr_, yTr_, Cs(i), ktype, paras(j));
+            allvalerrs(i,j) = allvalerrs(i,j) + sum(sign(svmclassify(xTv))~=yTv(:))/length(yTv);
+        end;
     end;
 end;
 
