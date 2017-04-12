@@ -49,7 +49,7 @@ for i=1:ROUNDS
  predTr=deepnet(w,xTr,[],wst,TRANSNAME);
  predTe=deepnet(w,xTe,[],wst,TRANSNAME);
  set(hte,'YData',predTe(ite),'Visible','on');
- set(htr,'YData',predTr(itr),'Visible','on'); 
+ set(htr,'YData',predTr(itr),'Visible','on');
  %subplot(1,3,3);
  errTr=[errTr sqrt(mean((predTr(:)-yTr(:)).^2))];
  errTe=[errTe sqrt(mean((predTe(:)-yTe(:)).^2))];

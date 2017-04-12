@@ -1,4 +1,4 @@
-function [ as,zs ] = forward_pass(W, xTr, trans_func )
+function [as, zs] = forward_pass(W, xTr, trans_func)
 % function [as,zs]=forward_pass(W,xTr,trans_func)
 %
 % INPUT:
@@ -12,16 +12,18 @@ function [ as,zs ] = forward_pass(W, xTr, trans_func )
 % zs = result of forward pass (zs{1} output layer of the forward pass) 
 %
 
-n=size(xTr, 2);
+n = size(xTr, 2);
 
 % first, we add the constant weight
-zs{length(W)+1}=[xTr;ones(1,n)];
-as{length(W)+1}=xTr;
+zs{length(W)+1} = [xTr; ones(1, n)];
+as{length(W)+1} = xTr;
 % Do the forward process here:
 for i=length(W):-1:2
-	% INSERT CODE:
-	
+    as{i} = W{i} * zs{i+1};
+    zs{i} = [trans_func(as{i}); ones(1, n)];
 end;
-% INSERT CODE: (last one is special, no transition function)
+% last one is special, no transition function
+as{1} = W{1} * zs{2};
+zs{1} = as{1};
 end
 
