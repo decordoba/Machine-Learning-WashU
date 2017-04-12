@@ -12,5 +12,5 @@ function [loss] = compute_loss(zs, yTr)
 
 delta = zs{1} - yTr;
 n = size(yTr, 2);
-loss = 0.5 * delta .* delta / n;
+loss = 0.5 * delta * delta' / n;
 end
