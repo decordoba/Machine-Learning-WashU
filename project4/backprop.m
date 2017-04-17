@@ -13,7 +13,8 @@ function  gradient = backprop(W, as, zs, yTr, der_trans_func)
 % gradient = the gradient at w as a cell array of matrices
 %
 
-delta = zs{1} - yTr;
+n = length(yTr);
+delta = (zs{1} - yTr) / n;
 % compute gradient with back-prop
 gradient = cell(size(W));
  for i=1:length(W)
