@@ -33,7 +33,7 @@ for i = 1:maxiter
     end;
     % Terminate if norm of gradient is smaller than tolerance
     if norm(gradient) < tolerance
-        break
+        break;
     end;
 end;
 end
